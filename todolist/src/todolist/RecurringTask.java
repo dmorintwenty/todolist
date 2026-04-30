@@ -2,7 +2,7 @@ package todolist;
 
 import java.time.LocalDate;
 
-public class RecurringTask extends Task {
+public class RecurringTask extends Task implements Recurring {
 
     
 

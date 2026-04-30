@@ -23,9 +23,9 @@ public abstract class Task {
         this.completed = false;
     }
 
-    // the core of the class, could be used to change booleans
+    // the core of the class, will mark tasks as complete, still WIP kinda
     public void markComplete() {
-       
+      completed = true; 
     }
 
     // getters
@@ -80,5 +80,5 @@ public abstract class Task {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }

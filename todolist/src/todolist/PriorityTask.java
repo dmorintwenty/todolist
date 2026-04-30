@@ -2,7 +2,7 @@ package todolist;
 
 import java.time.LocalDate;
 
-public class PriorityTask extends Task {
+public class PriorityTask extends Task implements Prioritizable {
 
 	public PriorityTask(String title, String description, LocalDate dueDate) {
 		super(title, description, dueDate);
