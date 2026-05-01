@@ -2,20 +2,34 @@ package todolist;
 
 public class CustomQueue<T> {
 
-	//TODO - ALL OF IT
+	
+	private CustomArrayList<T> elements;
+
+	public CustomQueue() {
+	    elements = new CustomArrayList<>();
+	}
+	
+	
     public void enqueue(T item) {
-        
+        elements.add(item);
     }
 
+    //for removing item on the top or index 0
     public T dequeue() {
-        return null;
+    	if(isEmpty()) {
+            throw new RuntimeException("Queue is empty");
+    		}
+    	else {
+        return elements.remove(0);
+    	}
     }
 
+    //just to see element
     public T peek() {
-        return null;
+        return elements.get(0);
     }
 
     public boolean isEmpty() {
-        return false;
+        return elements.size() == 0;
     }
 }

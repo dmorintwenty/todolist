@@ -21,13 +21,11 @@ public class PriorityTask extends Task implements Prioritizable {
 
 	@Override
 	public String getTaskType() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Priority task";
 	}
 
 	@Override
 	public String getDetails() {
-		// TODO Auto-generated method stub
-		return null;
+		return getTaskType() + ": " + title + " - Priority: " + getPriority();
 	}
 }

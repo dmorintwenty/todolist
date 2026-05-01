@@ -23,13 +23,11 @@ public class RecurringTask extends Task implements Recurring {
 
 	@Override
 	public String getTaskType() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Recurring Task";
 	}
 
 	@Override
 	public String getDetails() {
-		// TODO Auto-generated method stub
-		return null;
+		return getTaskType() + ": " + title + " - Repeats: " + getRecurrencePattern();
 	}
 }

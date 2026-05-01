@@ -31,19 +31,19 @@ public abstract class Task {
     // getters
     public String getTitle() { 
     	
-    	return null; }
+    	return title; }
     
     public String getDescription() { 
     	
-    	return null; }
+    	return description; }
     
     public boolean isCompleted() { 
     	
-    	return false; }
+    	return completed; }
     
     public LocalDate getDueDate() { 
     	
-    	return null; }
+    	return dueDate; }
     
 
     // will allow us to create our task based on specs
@@ -54,11 +54,10 @@ public abstract class Task {
     
     // .tostring function
     public String toString() {
-        return null;
-        
-    }
+    	return title + " on " + dueDate + " - Completed: " + completed;
+    	}
 	
-	
+
 	//prioritytask interface methods
 	public void setPriority(int priority) {
 	
@@ -72,12 +71,10 @@ public abstract class Task {
 
 	//recurringtask interface methods
 	public void setRecurrencePattern(String pattern) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public String getRecurrencePattern() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

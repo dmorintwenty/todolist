@@ -13,14 +13,12 @@ public class SimpleTask extends Task {
 	
 	@Override
 	public String getTaskType() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Simple Task";
 	}
 
 	@Override
 	public String getDetails() {
-		// TODO Auto-generated method stub
-		return null;
+		return getTaskType() + ": " + title;
 	}
 
 }
