@@ -106,45 +106,65 @@ public class UI {
         String desc = scnr.nextLine();
 
         LocalDate date = null;
-        
-        //anti-crash date input implementation
+
         while (date == null) {
             System.out.print("Enter due date (YYYY-MM-DD): ");
             String input = scnr.nextLine();
-            
-            //hoping the catch prevents crash in multiple cases, try and break it
+
             try {
                 date = LocalDate.parse(input);
             } catch (Exception e) {
-                System.out.println("Invalid format. Please use YYYY-MM-DD (example: 2026-11-18)");
+                System.out.println("Invalid format. Please use YYYY-MM-DD.");
             }
+        }
 
-        System.out.println("Task type (simple/priority/recurring): ");
-        String type = scnr.nextLine();
-
+        String type = null;
         Task task;
 
-        if (type.equalsIgnoreCase("priority")) {
+        while (type == null) {
+
+            System.out.println("Task type (simple/priority/recurring): ");
+            String input = scnr.nextLine();
+
+            if (input.equalsIgnoreCase("simple")
+                    || input.equalsIgnoreCase("priority")
+                    || input.equalsIgnoreCase("recurring")) {
+
+                type = input.toLowerCase();
+
+            } else {
+                System.out.println("Invalid type. Please enter: simple, priority, or recurring.");
+            }
+        }
+        
+        if (type.equals("priority")) {
+
             System.out.print("Enter priority (1-5): ");
             int priority = scnr.nextInt();
             scnr.nextLine();
 
             task = new PriorityTask(title, desc, date, priority);
 
-        } else if (type.equalsIgnoreCase("recurring")) {
+        } 
+        
+        //TODO: Copy what I did for priority and apply to recurring so that it only accepts certain inputs
+        else if (type.equals("recurring")) {
+
             System.out.print("Enter recurrence pattern: ");
             String pattern = scnr.nextLine();
 
             task = new RecurringTask(title, desc, date, pattern);
 
-        } else {
+        } 
+        else {
+
             task = new SimpleTask(title, desc, date);
         }
 
         manager.addTask(task);
         System.out.println("Task added.");
     }
-    }
+    
     
     //UI methods are sorted in switch case order for your convenience
     
