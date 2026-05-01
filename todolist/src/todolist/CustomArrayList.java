@@ -5,7 +5,7 @@ import java.util.*;
 class CustomArrayList<T> implements Iterable<T> {
 
     private T[] elements;
-    private int size = 0;
+    int size = 0;
     private static final int DEFAULT_CAPACITY = 10;
 
     /** 

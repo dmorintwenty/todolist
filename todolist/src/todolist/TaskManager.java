@@ -10,6 +10,10 @@ public class TaskManager {
     private CustomStack<Task> undoTaskStack;
     private CustomQueue<Task> queue;
 
+    //for checking if there are any tasks stored (UI Implementation)
+    public int getTasksSize() {
+    	return tasks.size();
+    }
     
     // data structures we will need
     public TaskManager() {
@@ -44,7 +48,10 @@ public class TaskManager {
     }
 
     public void displayAllTasks() {
-        for(int i = 0; i < tasks.size(); i++) {
+        if (tasks.size == 0) {
+        	System.out.println("\n No tasks saved at the moment.");
+        }
+    	for(int i = 0; i < tasks.size(); i++) {
         System.out.println("Tasks " + tasks.get(i));
         }
     }
@@ -118,5 +125,28 @@ public class TaskManager {
     		
     	}
 
+    }
+    
+    public void displayQueue() {
+
+        if (queue.isEmpty()) {
+            System.out.println("Queue is empty");
+            return;
+        }
+
+        CustomQueue<Task> temp = new CustomQueue<>();
+
+        System.out.println("TASK QUEUE");
+
+        while (!queue.isEmpty()) {
+            Task task = queue.dequeue();
+            System.out.println(task);
+            temp.enqueue(task);
+        }
+
+        // restore queue
+        while (!temp.isEmpty()) {
+            queue.enqueue(temp.dequeue());
+        }
     }
 }

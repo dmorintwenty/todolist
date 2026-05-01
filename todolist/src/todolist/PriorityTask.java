@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class PriorityTask extends Task implements Prioritizable {
 
-	public PriorityTask(String title, String description, LocalDate dueDate) {
+	public PriorityTask(String title, String description, LocalDate dueDate, int priority) {
 		super(title, description, dueDate);
 		
 	}

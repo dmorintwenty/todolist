@@ -6,7 +6,7 @@ public class RecurringTask extends Task implements Recurring {
 
     
 
-    public RecurringTask(String title, String description, LocalDate dueDate) {
+    public RecurringTask(String title, String description, LocalDate dueDate, String pattern) {
 		super(title, description, dueDate);
 		
 	}
