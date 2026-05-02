@@ -1,11 +1,17 @@
 package todolist;
 import java.util.*;
-//all custom classes handle data in similar ways, can be combined into one class 
 
+
+
+/**
+ * Not using Javas built in ArrayList we create ours here
+ * Implementation of methods ArrayList come standard like add, remove, get, set, size. 
+ * @param <T>
+ */
 class CustomArrayList<T> implements Iterable<T> {
 
     private T[] elements;
-    int size = 0;
+    private int size = 0;
     private static final int DEFAULT_CAPACITY = 10;
 
     /** 
@@ -21,6 +27,7 @@ class CustomArrayList<T> implements Iterable<T> {
      */
     private void doubleCapacity() {
         int newSize = elements.length * 2;
+        //double the size when no more room
         elements = Arrays.copyOf(elements, newSize);
     }
 
@@ -30,6 +37,7 @@ class CustomArrayList<T> implements Iterable<T> {
     public boolean add(T element) {
         if (size == elements.length) {
             doubleCapacity();
+           //calling the extra space if needed here
         }
         elements[size++] = element;
         return true;
@@ -116,6 +124,7 @@ class CustomArrayList<T> implements Iterable<T> {
      * return index of element or -1 if not found 
      */
     private int indexOf(T element) {
+    	//seperate for null statement as we dont want exception
         if (element == null) {
             for (int i = 0; i < size; i++) {
                 if (elements[i] == null) return i;

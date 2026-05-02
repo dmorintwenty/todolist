@@ -1,7 +1,11 @@
 package todolist;
 
+/**
+ * Interface for tasks that have a priority level
+ * Implemented by PriorityTask
+ */
+
 public interface Prioritizable {
-	//TODO: Check returns in debug or console later in other parts of program to make sure the getter isn't just being useless here
 
 	/**
 	 * @param priority

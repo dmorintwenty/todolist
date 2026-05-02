@@ -1,10 +1,8 @@
-package playground;
-
-import todolist.TaskManager;
-import todolist.UI;
+package todolist;
 
 /**
  * Main method
+ * Creates a TaskManager and UI then starts the program
  */
 public class Mainmethod {
 

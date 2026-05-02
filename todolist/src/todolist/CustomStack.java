@@ -1,5 +1,12 @@
 package todolist;
 
+/**
+ * Custom implementation of a Stack
+ * Follows LIFO (Last In First Out order)
+ * Used to track actions for the undo system
+ * @param <T>
+ */
+
 public class CustomStack<T> {
 
     private CustomArrayList<T> elements;
@@ -36,9 +43,6 @@ public class CustomStack<T> {
         if (isEmpty()) {
         	throw new IllegalStateException("stack is empty");
         	
-        	//debated between this and --> throw new RuntimeException("stack is empty");
-        	//It likely doesnt even cause a runtime difference, 
-        	//TODO: Compare IllegalStateException to RuntimeException throws on empty stack
         }
 
         return elements.get(elements.size() - 1);

@@ -4,28 +4,42 @@ import java.util.Scanner;
 import java.time.LocalDate;
 
 /**
- * 
+ * Command line interface for the todo list
+ * Handles all user input and calls TaskManager methods
  */
 public class UI {
 
     private TaskManager manager;
     private Scanner scnr;
 
+    
+    /**
+     * creates a new UI with a TaskManager
+     */
     public UI(TaskManager manager) {
         this.manager = manager;
         this.scnr = new Scanner(System.in);
     }
 
-    //program entry, yay!!
+    /**
+     * starts the main menu loop, runs until user exits
+     */
     public void start() {
         boolean running = true;
-
+        int choice;
         while (running) {
 
             printMenu();
 
-            int choice = scnr.nextInt();
-            scnr.nextLine(); // consume newline
+            //needed try statement or a String or any other input would crash system
+            try {
+            	choice = scnr.nextInt();
+            	scnr.nextLine();
+            } catch (Exception e) {
+            	System.out.println("Invalid input, please enter a number 1-10.");
+                scnr.nextLine(); // consume newline
+                continue; 
+            }
 
             switch (choice) {
 
@@ -78,8 +92,10 @@ public class UI {
         scnr.close();
     }
 
-    //menu
-
+    
+    /**
+     * prints the main menu options
+     */
     private void printMenu() {
         System.out.println("\nChoose one option");
         System.out.println("1. Add Task");
@@ -95,8 +111,10 @@ public class UI {
         System.out.print("Choice: ");
     }
 
-    // UI methods
-
+    /**
+     * handles adding a new task, prompts for type and details
+     * validates date, task type, priority range, and recurrence pattern
+     */
     private void addTaskUI() {
 
         System.out.print("Enter title: ");
@@ -111,6 +129,7 @@ public class UI {
             System.out.print("Enter due date (YYYY-MM-DD): ");
             String input = scnr.nextLine();
 
+            //needed try and catch so invalid inputs do not cause a crash
             try {
                 date = LocalDate.parse(input);
             } catch (Exception e) {
@@ -138,23 +157,50 @@ public class UI {
         }
         
         if (type.equals("priority")) {
-
-            System.out.print("Enter priority (1-5): ");
-            int priority = scnr.nextInt();
-            scnr.nextLine();
+        	int priority = 0;
+            
+            //needed try and catch exception to prevent a crash if misinput
+            while (priority < 1 || priority > 5) {
+                System.out.print("Enter priority (1-5): ");
+                // try so that the integer is between 1-5
+                try {
+                    priority = scnr.nextInt();
+                    scnr.nextLine();
+                    if (priority < 1 || priority > 5) {
+                        System.out.println("Priority must be between 1 and 5.");
+                    }
+                    // catch for a non integer input so a letter doesn't crash anything
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Please enter a number 1-5.");
+                    scnr.nextLine();
+                }
+            }
 
             task = new PriorityTask(title, desc, date, priority);
 
         } 
         
-        //TODO: Copy what I did for priority and apply to recurring so that it only accepts certain inputs
         else if (type.equals("recurring")) {
 
-            System.out.print("Enter recurrence pattern: ");
-            String pattern = scnr.nextLine();
-
+        	String pattern = null;
+            while (pattern == null) {
+            	
+            System.out.print("Enter recurrence pattern:");
+            String input = scnr.nextLine();
+            //needed if statement for a missinput and no crash
+            if (input.equalsIgnoreCase("daily")
+                    || input.equalsIgnoreCase("weekly")
+                    || input.equalsIgnoreCase("monthly")
+                    || input.equalsIgnoreCase("yearly")) {
+            
+                pattern = input.toLowerCase();
+            
+            }else {
+                System.out.println("Invalid pattern. Please enter: daily, weekly, monthly, or yearly.");
+            }
+           }
+        
             task = new RecurringTask(title, desc, date, pattern);
-
         } 
         else {
 
@@ -166,10 +212,9 @@ public class UI {
     }
     
     
-    //UI methods are sorted in switch case order for your convenience
-    
     /**
-     * 
+     * displays all tasks
+     *UI methods are sorted in switch case order for your convenience
      */
     private void viewAllTasksUI() {
     	manager.displayAllTasks();
@@ -177,44 +222,84 @@ public class UI {
     }
     
     /**
-     * 
+     * prompts for index and marks task as complete
      */
     private void completeTaskUI() {
         System.out.print("Enter task index to complete: ");
-        int index = scnr.nextInt();
-        scnr.nextLine();
+        //need the try catch like every other method because of invalid inputs lead to a crash
+        try {
+        	int index = scnr.nextInt();
+            scnr.nextLine();
+            
+            //need minus one because we added to the UI print for user ease
+            manager.completeTask(index - 1);
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter a number.");
+            scnr.nextLine();
+        }
 
-        manager.completeTask(index);
-        System.out.println("Task marked as complete.");
     }
     
+    /**
+     * prompts for index and removes task
+     */
     private void removeTaskUI() {
         System.out.print("Enter task index to remove: ");
-        int index = scnr.nextInt();
-        scnr.nextLine();
-
-        manager.removeTask(index);
-        System.out.println("Task removed.");
+        //need the try/catch here aswell
+        try {
+        	int index = scnr.nextInt();
+            scnr.nextLine();
+            //need minus one because we added to the UI print for user ease
+            manager.removeTask(index - 1);
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter a number.");
+            scnr.nextLine();
+        }
     }
     
+    /**
+     * undoes the last action
+     */
     private void undoLastActionUI() {
         manager.undoLastAction();
     }
     
+    
+    /**
+     * loads all recurring tasks into the queue
+     */
     private void loadTodayTasksUI() {
         manager.loadTodaysTasks();
         System.out.println("Today's recurring tasks loaded into queue.");
     }
     
+    /**
+     * displays all tasks in the queue
+     */
     private void viewQueueUI() {
         manager.displayQueue();
     }
     
+    /**
+     * processes the next task in the queue
+     * marks it as complete based on user input
+     */
     private void processNextTaskUI() {
+        if (manager.isQueueEmpty()) {
+            System.out.println("No more new tasks, you have time add some more tasks today");
+            return;
+        }
         manager.processNextTask();
+        System.out.print("Mark this task as complete? (yes/no): ");
+        String answer = scnr.nextLine();
+        if (answer.equalsIgnoreCase("yes")) {
+            System.out.println("Task marked as complete.");
+        }
     }
     
-    
+    /**
+     * prompts user to filter by status, type, or priority
+     */
     private void filterTasksUI() {
 
         System.out.println("Filter by:");
@@ -222,8 +307,16 @@ public class UI {
         System.out.println("2. Type");
         System.out.println("3. Priority");
 
-        int choice = scnr.nextInt();
-        scnr.nextLine();
+        int choice = 0;
+        // try/catch to avoid a missinput crash
+        try {
+            choice = scnr.nextInt();
+            scnr.nextLine();
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter a number.");
+            scnr.nextLine();
+            return;
+        }
 
         switch (choice) {
 
@@ -244,10 +337,16 @@ public class UI {
 
             case 3:
                 System.out.print("Enter priority level: ");
-                int priority = scnr.nextInt();
-                scnr.nextLine();
-
-                manager.filterByPriority(priority);
+               
+                // try/catch to avoid a missinput crash
+                try {
+                	int priority = scnr.nextInt();
+                    scnr.nextLine();
+                    manager.filterByPriority(priority);
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Please enter a number.");
+                    scnr.nextLine();
+                }
                 break;
 
             default:

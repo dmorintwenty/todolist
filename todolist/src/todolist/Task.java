@@ -1,11 +1,9 @@
 package todolist;
 import java.time.LocalDate;
 
-//split methods as follows
-/*
- * simpletask
- * prioritytask
- * recurringtask
+/**
+ * Abstract base class for all task types
+ * SimpleTask, PriorityTask, and RecurringTask all extend this class
  */
 public abstract class Task {
 	
@@ -16,6 +14,12 @@ public abstract class Task {
 	protected int priority;
 	protected String recurrencePattern;
 
+	 /**
+     * creates a new Task
+     * @param title the task title
+     * @param description the task description
+     * @param dueDate the due date
+     */
 	public Task(String title, String description, LocalDate dueDate) {
         this.title = title;
         this.description = description;
@@ -23,7 +27,7 @@ public abstract class Task {
         this.completed = false;
     }
 
-    // the core of the class, will mark tasks as complete, still WIP kinda
+    // the core of the class, will mark tasks as complete
     public void markComplete() {
       completed = true; 
     }

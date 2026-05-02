@@ -1,7 +1,11 @@
 package todolist;
 
+/**
+ * Interface for tasks that repeat on a schedule
+ * Implemented by RecurringTask
+ */
+
 public interface Recurring {
-	//TODO: Check returns in debug or console later in other parts of program to make sure the getter isn't just being useless here
 
 	/** 
      * set recurrence pattern 
